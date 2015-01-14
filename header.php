@@ -38,26 +38,26 @@
           <ul class="nav navbar-nav">
             
             <?php
-            $sqlcategory = "SELECT ID, Name FROM Category";
+            $sqlcategory = "SELECT idCategory, nameCategory FROM Category";
             $resultcategory = $conn->query($sqlcategory);
-
+ 
             if ($resultcategory->num_rows > 0)
             {
               echo "<li class='dropdown'>"; 
               while($rowcategory = $resultcategory->fetch_assoc())
               {
                 echo "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'";
-                echo $rowcategory["Name"];
+                echo $rowcategory["nameCategory"];
                 echo "span class='caret'></span>";
                 echo "</a>";
-                $sqllink = "SELECT Link.ID, Link.Name, Link.CID, Category.ID, Category.Name FROM Link, Category WHERE Link.CID =" . $row["ID"] . "";
+                $sqllink = "SELECT Link.idLink, Link.nameLink, Link.categoryLink, Category.idCategory, Category.nameCategory FROM Link, Category WHERE Link.categoryLink =" . $rowcategory["idCategory"] . "";
                 $resultlink = $conn->query($sql);
                 if ($resultlink->num_rows > 0)
                 {
                   while($rowlink = $resultlink ->fetch_assoc())
                   {
                     echo "<li>";
-                    echo "<a href='#'>" . $rowlink["Link.Name"] . "</a>";
+                    echo "<a href='#'>" . $rowlink["Link.nameLink"] . "</a>";
                     echo "</li>";
                   }
                 }
