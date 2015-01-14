@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
+    <link rel="icon" href="../../favicon.ico"> 
 
     <title>Starter Template for Bootstrap</title>
 
@@ -19,6 +19,10 @@
 
   <body>
 
+  <?php
+    include 'sqlconnection.php';
+  ?>
+
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
@@ -29,9 +33,39 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="#">Project name</a>
-        </div>
+        </div>  
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
+            
+            <?php
+            $sqlcategory = "SELECT ID, Name FROM Category";
+            $resultcategory = $conn->query($sqlcategory);
+
+            if ($resultcategory->num_rows > 0)
+            {
+              echo "<li class='dropdown'>"; 
+              while($rowcategory = $resultcategory->fetch_assoc())
+              {
+                echo "<a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-expanded='false'";
+                echo $rowcategory["Name"];
+                echo "span class='caret'></span>";
+                echo "</a>";
+                $sqllink = "SELECT Link.ID, Link.Name, Link.CID, Category.ID, Category.Name FROM Link, Category WHERE Link.CID =" . $row["ID"] . "";
+                $resultlink = $conn->query($sql);
+                if ($resultlink->num_rows > 0)
+                {
+                  while($rowlink = $resultlink ->fetch_assoc())
+                  {
+                    echo "<li>";
+                    echo "<a href='#'>" . $rowlink["Link.Name"] . "</a>";
+                    echo "</li>";
+                  }
+                }
+              }
+              echo "</li>";
+            }
+            ?>
+
             <li class="active"><a href="#">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#contact">Contact</a></li>
